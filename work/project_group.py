@@ -6,7 +6,9 @@ videos = ['조용원', '정태호', '정우민', '장진희', '임채은', '이�
 #Urclass 수강생 현황 csv 불러오기
 df = pd.read_csv('1012.csv')
 
-def group_maker(random_seed, video=len(videos), videos=videos, ur_list=df, group_num=7):
+def group_maker(random_seed, video=len(videos), videos=videos, ur_list=df, group_num=7): # 함수가 선언되는 부분에는 `video=len(videos)`처럼 내장함수가 없는 것이 좋습니다.
+    # 이러한 경우 함수 내부에 video 변수값을 받아오는 계산식을 만드는 것이 좋습니다.
+    # 왜냐하면 함수선언부에 계산식이나 내장함수가 호출되면 project_group.py코드가 호출되거나 group_maker 함수가 호출될 때마다 추가적으로 메모리가 소비될 수 있습니다.
     """
     인원 배치는 랜덤이되 각 조에 제출자의 수가 일정하게 들어가게끔 프로젝트 조 짜는 함수입니다
 
