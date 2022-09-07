@@ -1,6 +1,8 @@
 import time
+from datetime import timedelta
 from urllib.error import HTTPError
 import requests
+from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
@@ -39,24 +41,34 @@ def connect_url(url:str, need_sizing:bool=False, need_scroll:bool=False) -> webd
             prev_heigth = curr_height
     return window
 
-def extract_class_text(window:webdriver, elem_name:str, type:str='str') -> list:
-    try:
-        elems = window.find_elements(By.CLASS_NAME, elem_name)
-        if type == 'str':
-            return [elem.text for elem in elems]
-        elif type == 'int':
-            nums = [elem.get_attribute("value") for elem in elems]
-            return sum(nums)
-    except:
-        """
-        값 못찾는 경우 예외처리 해야함
-        """
-        return None
+def extract_class_text(window:webdriver, class_name:str) -> list:
+    #try:
+    elems = window.find_elements(By.CLASS_NAME, class_name)
+    return [elem.text for elem in elems]
 
-def extract_herf_by_class(window:webdriver, parent_elem:str) -> list:
-    parent_nodes = window.find_elements(By.CLASS_NAME, parent_elem)
+def extract_herf_by_class(window:webdriver, class_name:str) -> list:
+    parent_nodes = window.find_elements(By.CLASS_NAME, class_name)
     hrefs = []
     for parent_node in parent_nodes:
         href = parent_node.find_element(By.XPATH, './/a[@href]').get_attribute('href')
         hrefs.append(href)
     return hrefs
+
+def calculate_duration(window:requests.Response, tag_type, class_name:str) -> str:
+    def calculate_time(sum_time:timedelta, new_time:str) -> timedelta:
+        new_times = new_time.split(':')
+        if len(new_times) > 2:
+            sum_time+=timedelta(hours=int(new_times[0]))
+            new_times.pop(0)
+        if len(new_times) > 1 :
+            sum_time+=timedelta(minutes=int(new_times[0]))
+            new_times.pop(0)
+        return sum_time+timedelta(seconds=int(new_times[0]))
+
+    elems = BeautifulSoup(window.content, 'html.parser').find_all(tag_type,class_=class_name)
+    times = [elem.text for elem in elems]
+
+    sum_time = timedelta(seconds=0)
+    for t in times:
+        sum_time = calculate_time(sum_time, t)
+    return sum_time
