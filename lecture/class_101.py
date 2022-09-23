@@ -17,7 +17,3 @@ for category in CATEGORIES:
         url = href + '?tap=curriculum'
         window = requests.get(url)
         time = calculate_duration(window, 'p', 'css-6t5aq4')
-    """
-    calculate_duration함수 테스트부터 작업
-    """
-    

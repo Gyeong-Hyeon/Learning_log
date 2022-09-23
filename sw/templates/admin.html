@@ -1,0 +1,14 @@
+
+{% extends 'customer.html' %}
+{% block template %}
+  <h1>답변을 입력하세요</h1></br>
+  <form method="POST" action="/admin">
+    <div class="mb-3">
+      <input type="text" class="form-control" style="width:100px;margin:auto;" name="ques_id" placeholder="질문 번호">
+    </div>
+    <div class="mb-3">
+      <textarea class="form-control" style="width:400px;margin:auto;" rows="3" name="answer" placeholder="답변을 입력해주세요"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">입력하기</button>
+</form>
+{% endblock %}
