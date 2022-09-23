@@ -14,8 +14,6 @@ def index():
         name = request.form['name']
         question = request.form['question']
         insert_question(name, question)
-        histories = return_history()
-        return render_template('customer.html', histories=histories)
     histories = return_history()
     return render_template('customer.html', histories=histories)
 
@@ -25,8 +23,6 @@ def return_result():
         ques_id = request.form['ques_id']
         answer = request.form['answer']
         update_answer(ques_id, answer)
-        histories = return_history()
-        return render_template('admin.html', histories=histories)
     histories = return_history()
     return render_template('admin.html', histories=histories)   
 
