@@ -13,7 +13,13 @@ for category in CATEGORIES:
     # titles = extract_class_text(window, 'css-p2s8cv')
     # lecturers = extract_class_text(window, 'css-1gctxks')
     hrefs = extract_herf_by_class(window, 'css-kvfwce')
-    for href in hrefs:
-        url = href + '?tap=curriculum'
-        window = requests.get(url)
-        time = calculate_duration(window, 'p', 'css-6t5aq4')
+    """
+    강의시간 받아올 수 없음
+    # for href in hrefs:
+    #     url = href + '?tap=curriculum'
+    #     window = requests.get(url)
+    #     time = calculate_duration(window, 'p', 'css-cvaw9y')
+    """
+
+    
+

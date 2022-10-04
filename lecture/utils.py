@@ -54,21 +54,21 @@ def extract_herf_by_class(window:webdriver, class_name:str) -> list:
         hrefs.append(href)
     return hrefs
 
-def calculate_duration(window:requests.Response, tag_type, class_name:str) -> str:
-    def calculate_time(sum_time:timedelta, new_time:str) -> timedelta:
-        new_times = new_time.split(':')
-        if len(new_times) > 2:
-            sum_time+=timedelta(hours=int(new_times[0]))
-            new_times.pop(0)
-        if len(new_times) > 1 :
-            sum_time+=timedelta(minutes=int(new_times[0]))
-            new_times.pop(0)
-        return sum_time+timedelta(seconds=int(new_times[0]))
+# def calculate_duration(window:requests.Response, tag_type:str, class_name:str) -> str:
+#     def calculate_time(sum_time:timedelta, new_time:str) -> timedelta:
+#         new_times = new_time.split(':')
+#         if len(new_times) > 2:
+#             sum_time+=timedelta(hours=int(new_times[0]))
+#             new_times.pop(0)
+#         if len(new_times) > 1 :
+#             sum_time+=timedelta(minutes=int(new_times[0]))
+#             new_times.pop(0)
+#         return sum_time+timedelta(seconds=int(new_times[0]))
 
-    elems = BeautifulSoup(window.content, 'html.parser').find_all(tag_type,class_=class_name)
-    times = [elem.text for elem in elems]
-
-    sum_time = timedelta(seconds=0)
-    for t in times:
-        sum_time = calculate_time(sum_time, t)
-    return sum_time
+#     elems = BeautifulSoup(window.text, 'html.parser').find_all(tag_type,class_=class_name)
+#     print(elems)
+#     times = [elem.text for elem in elems]
+#     sum_time = timedelta(seconds=0)
+#     for t in times:
+#         sum_time = calculate_time(sum_time, t)
+#     return sum_time
